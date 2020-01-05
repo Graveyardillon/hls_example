@@ -17,6 +17,10 @@ config :hls, HlsWeb.Endpoint,
   render_errors: [view: HlsWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Hls.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :hls, HlsWeb.Accounts.Guardian,
+  issur: "hls",
+  secret_key: ""
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
