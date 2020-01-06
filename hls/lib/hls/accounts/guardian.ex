@@ -10,4 +10,5 @@ defmodule Hls.Accounts.Guardian do
     |> Accounts.get_user!
     {:ok, user}
     #If something goes wrong here return {:error, reason}
+  end
 end

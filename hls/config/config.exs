@@ -17,7 +17,7 @@ config :hls, HlsWeb.Endpoint,
   render_errors: [view: HlsWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Hls.PubSub, adapter: Phoenix.PubSub.PG2]
 
-config :hls, HlsWeb.Accounts.Guardian,
+config :hls, Hls.Accounts.Guardian,
   issur: "hls",
   secret_key: "M2PQfcLFDcLw1v71iI11MUin3GpMnTqdXqtvA3kYEJah6XNS8MkMv1vC8wxMN+5N"
 
