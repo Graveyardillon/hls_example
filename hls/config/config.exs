@@ -19,7 +19,7 @@ config :hls, HlsWeb.Endpoint,
 
 config :hls, HlsWeb.Accounts.Guardian,
   issur: "hls",
-  secret_key: ""
+  secret_key: "M2PQfcLFDcLw1v71iI11MUin3GpMnTqdXqtvA3kYEJah6XNS8MkMv1vC8wxMN+5N"
 
 # Configures Elixir's Logger
 config :logger, :console,

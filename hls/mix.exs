@@ -44,6 +44,7 @@ defmodule Hls.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:guardian, "~> 1.1"},
+      {:jose, "~> 1.9.0"},
       {:comeonin, "~> 4.1"},
       {:bcrypt_elixir, "~> 1.1"}
     ]
