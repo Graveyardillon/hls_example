@@ -102,6 +102,10 @@ defmodule Hls.Accounts do
     User.changeset(user, %{})
   end
 
+  def current_user(conn) do
+    Guardian.Plug.current_resource(conn)
+  end
+
   def authenticate_user(email, plain_text_password) do
     query = from u in User, where: u.email == ^email
     Repo.one(query)
