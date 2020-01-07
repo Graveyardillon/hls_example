@@ -46,7 +46,9 @@ defmodule Hls.MixProject do
       {:guardian, "~> 1.1"},
       {:jose, "~> 1.9.0"},
       {:comeonin, "~> 4.1"},
-      {:bcrypt_elixir, "~> 1.1"}
+      {:bcrypt_elixir, "~> 1.1"},
+      {:phoenix_live_view, "~> 0.4.0"},
+      {:floki, ">= 0.0.0", only: :test}
     ]
   end
 

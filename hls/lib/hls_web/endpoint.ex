@@ -1,6 +1,8 @@
 defmodule HlsWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :hls
 
+  socket "/live", Phoenix.LiveView.Socket
+
   socket "/socket", HlsWeb.UserSocket,
     websocket: true,
     longpoll: false

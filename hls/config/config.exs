@@ -15,7 +15,10 @@ config :hls, HlsWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "w6aU/gw1oPegwLuf7Vu15kT2JNxJncr/TcxfJNiNQxR8IBKrXn/Ufrg3vlRXWTcH",
   render_errors: [view: HlsWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Hls.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Hls.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [
+    signing_salt: "fW7lmdEcNurtI7E9Ng4WWWRbkxvCeyiy"
+  ]
 
 config :hls, Hls.Accounts.Guardian,
   issur: "hls",
