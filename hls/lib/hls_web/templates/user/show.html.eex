@@ -11,6 +11,10 @@
     <strong>Email:</strong>
     <%= @user.email %>
   </li>
+  <li>
+    <%= link "CHAT", to: Routes.user_chat_path(@conn, :new, @user.id, id: @user.id) %>
+  </li>
+
 
 </ul>
 

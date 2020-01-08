@@ -31,12 +31,17 @@ defmodule HlsWeb.Router do
     post "/login", SessionController, :create
     delete "/logout", SessionController, :delete
   end
+
   scope "/", HlsWeb do
     pipe_through [:browser, :auth, :ensure_auth]
 
     resources "/users", UserController, except: [:new, :create]
-    resources "/chats", ChatController
+    resources "/users", UserController do
+      get "/chats", ChatController, :new
+    end
   end
+
+
 
   # Other scopes may use custom stacks.
   # scope "/api", HlsWeb do
