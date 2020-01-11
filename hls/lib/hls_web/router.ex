@@ -36,8 +36,11 @@ defmodule HlsWeb.Router do
     pipe_through [:browser, :auth, :ensure_auth]
 
     resources "/users", UserController, except: [:new, :create]
+
     resources "/users", UserController do
-      get "/chats", ChatController, :new
+      # resources "/chats", ChatController
+      get "/chats", ChatController, :show
+      # live("/chats", ChatLiveView)
     end
   end
 

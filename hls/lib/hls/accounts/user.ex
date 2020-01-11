@@ -3,6 +3,8 @@ defmodule Hls.Accounts.User do
   import Ecto.Changeset
   alias Comeonin.Bcrypt
 
+  alias Hls.Chats.Chat
+
   schema "users" do
     field :email, :string
     field :name, :string

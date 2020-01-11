@@ -1,39 +1,39 @@
 defmodule Hls.Chats do
-  alias Hls.Repo
-  alias Hls.Chats.Chat
-  alias Hls.Chats.Message
   import Ecto.Query
 
-  def create_chat(chat_params) do
-    Chat.changeset(%Chat{}, chat_params)
+  alias Hls.Chats.Chat
+  alias Hls.Repo
+
+  # def create_chat(chat_params) do
+  #   Chat.changeset(%Chat{}, chat_params)
+  #   |> Repo.insert()
+  # end
+
+  def create_msg(msg_params) do
+    Chat.changeset(%Chat{}, msg_params)
     |> Repo.insert()
+
+    Hls.Chats.get_chat(msg_params["board_user_id"])
   end
 
-  def create_message(message_params) do
-    Message.changeset(%Message{}, message_params)
-    |> Repo.insert!()
-
-    Hls.Chats.get_chat(message_params["chat_id"])
+  def change_msg do
+    Chat.changeset(%Chat{})
   end
 
-  def change_message do
-    Message.changeset(%Message{})
-  end
-
-  def change_message(changeset, changes) do
-    Message.changeset(changeset, changes)
+  def change_msg(changeset, changes) do
+    Chat.changeset(changeset, changes)
   end
 
   def list_chats do
     Repo.all(Chat)
   end
 
-  def get_chat(chat_id) do
+  def get_chat(board_user_id) do
     query =
       from c in Chat,
-      where: c.id == ^chat_id,
-      preload: [messages: :user]
+      where: c.board_user_id == ^board_user_id
+      # preload: [messages: :user]
 
-    Repo.one(query)
+    Repo.all(query)
   end
 end
