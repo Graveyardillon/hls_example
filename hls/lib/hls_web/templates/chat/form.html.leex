@@ -1,0 +1,13 @@
+<%= f = form_for @changeset, "#", [phx_change: :validate, phx_submit: :send_message, autocomplete: :off] %>
+
+  <%= label f, :msg %>
+  <%= text_input f, :msg %>
+  <%= error_tag f, :msg %>
+
+  <%= hidden_input f, :user_id, user_id: @current_user %>
+  <%= hidden_input f, :chat_id, chat_id: @chat_id %>
+
+  <div>
+    <%= submit "Send", phx_disable_with: "Loading..." %>
+  </div>
+</form>

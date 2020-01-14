@@ -4,7 +4,6 @@ defmodule HlsWeb.UserController do
   alias Hls.Accounts
   alias Hls.Accounts.User
   alias Hls.Accounts.Guardian
-  alias Hls.Chats
 
   plug :is_authorized when action in [:edit, :update, :delete]
 
