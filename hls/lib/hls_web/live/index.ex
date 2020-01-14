@@ -35,10 +35,10 @@ defmodule HlsWeb.Live.Index do
   end
 
   def handle_event("send_message", %{"message" => params}, socket) do
-    IO.inspect(params)
     case Chat.create_message(params) do
-      {:ok, message} ->
-        {:noreply, fetch(socket, message)}
+      {:ok, message} -> #フォームに残す情報？
+        {:noreply, fetch(socket, chat_id: message.chat_id, user_id: message.user_id)}
+        # {:noreply, fetch(socket)}
         # {:noreply, fetch(socket, message.user_id)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -48,11 +48,14 @@ defmodule HlsWeb.Live.Index do
   end
 
   def handle_info({Chat, [:message, _event_type], _message}, socket) do
-    {:noreply, fetch(socket, get_user_name(socket))}
+    {:noreply, fetch(socket, get_user_id(socket), get_chat_id(socket))}
   end
-
-  defp get_user_name(socket) do
+  defp get_user_id(socket) do
     socket.assigns
     |> Map.get(:user_id)
+  end
+  defp get_chat_id(socket) do
+    socket.assigns
+    |> Map.get(:chat_id)
   end
 end

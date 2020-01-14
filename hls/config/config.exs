@@ -17,7 +17,7 @@ config :hls, HlsWeb.Endpoint,
   render_errors: [view: HlsWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Hls.PubSub, adapter: Phoenix.PubSub.PG2],
   live_view: [
-    signing_salt: "fW7lmdEcNurtI7E9Ng4WWWRbkxvCeyiy"
+    signing_salt: "BvvVqyfgC4Z3F1BrEaCKCL4Rsmk5L8Nn"
   ]
 
 config :hls, Hls.Accounts.Guardian,
