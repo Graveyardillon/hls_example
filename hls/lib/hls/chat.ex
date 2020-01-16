@@ -117,8 +117,8 @@ defmodule Hls.Chat do
     Message.changeset(message, attrs)
   end
 
-  defp notify_subs({:ok, result}, event, chat_id) do
-    Phoenix.PubSub.broadcast(Hls.PubSub, chat_id, {__MODULE__, event, result})
+  defp notify_subs({:ok, result}, chat_id, event) do
+    Phoenix.PubSub.broadcast(Hls.PubSub, chat_id, {:Chat, event, result})
     {:ok, result}
   end
   defp notify_subs({:error, reason}, _event) do
