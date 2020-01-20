@@ -1,6 +1,8 @@
+<h1>chat of user<%= @chat_id %></h1>
+
 <ul id="msgs" style="list-style: none; min-height:400px; border: 1px solid; padding: 10px;">
   <%= for message <- @messages do %>
-    <li><strong> <%= message.user_id %> : </strong> <%= message.msg %> </li>
+    <li><strong> <%= message.user.name %> : </strong> <%= message.msg %> </li>
   <% end %>
 </ul>
 

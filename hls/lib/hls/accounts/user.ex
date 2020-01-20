@@ -2,11 +2,14 @@ defmodule Hls.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias Comeonin.Bcrypt
+  alias Hls.Chat.Message
 
   schema "users" do
     field :email, :string
     field :name, :string
     field :password, :string
+
+    has_many :messages, Message
 
     timestamps()
   end

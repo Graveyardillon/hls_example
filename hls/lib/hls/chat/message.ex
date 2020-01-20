@@ -1,11 +1,13 @@
 defmodule Hls.Chat.Message do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Hls.Accounts.User
 
   schema "messages" do
     field :chat_id, :integer
     field :msg, :string
-    field :user_id, :integer
+    belongs_to :user, User
+    # field :user_id, :integer
 
     timestamps()
   end

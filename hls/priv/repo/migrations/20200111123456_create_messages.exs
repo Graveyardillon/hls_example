@@ -4,8 +4,8 @@ defmodule Hls.Repo.Migrations.CreateMessages do
   def change do
     create table(:messages) do
       add :msg, :string
-      add :user_id, :integer
-      add :chat_id, :integer
+      add :user_id, :id
+      add :chat_id, :id
 
       timestamps()
     end

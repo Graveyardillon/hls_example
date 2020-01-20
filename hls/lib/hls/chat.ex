@@ -5,6 +5,7 @@ defmodule Hls.Chat do
 
   import Ecto.Query, warn: false
   alias Hls.Repo
+  alias Hls.Accounts.User
 
   alias Hls.Chat.Message
 
@@ -127,12 +128,18 @@ defmodule Hls.Chat do
 
   # def get_messages(chat_id) do
   #   from c in Message,
-  #     where: c.chat_id == ^chat_id
+  #     where: c.chat_id == ^chat_id,
+  #     preload: [messages: :user]
   #   Repo.all(Message)
   # end
 
-  def get_messages(chat_id) do
-    from(c in Message, where: c.chat_id == ^chat_id)
+  # def get_messages(chat_id) do
+  #   from(c in Message, where: c.chat_id == ^chat_id, preload: [messages: :user])
+  #   |> Repo.all()
+  # end
+
+    def get_messages(chat_id) do
+    from(c in Message, where: c.chat_id == ^chat_id, preload: [:user])
     |> Repo.all()
   end
 end
