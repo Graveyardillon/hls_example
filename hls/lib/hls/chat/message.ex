@@ -7,7 +7,6 @@ defmodule Hls.Chat.Message do
     field :chat_id, :integer
     field :msg, :string
     belongs_to :user, User
-    # field :user_id, :integer
 
     timestamps()
   end

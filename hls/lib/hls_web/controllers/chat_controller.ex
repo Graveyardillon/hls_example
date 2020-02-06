@@ -1,6 +1,7 @@
 defmodule HlsWeb.ChatController do
   use HlsWeb, :controller
   alias Hls.Accounts
+  use Phoenix.LiveView
 
   def index(conn, %{"user_id" => chat_id}) do
     Phoenix.LiveView.Controller.live_render(

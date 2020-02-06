@@ -65,6 +65,7 @@ defmodule Hls.Chat do
     %Message{}
     |> Message.changeset(attrs)
     |> Repo.insert()
+    # |> notify_subs(chat_id, [:message, :inserted])
     |> notify_subs(chat_id, [:message, :inserted])
   end
 
@@ -119,7 +120,7 @@ defmodule Hls.Chat do
   end
 
   defp notify_subs({:ok, result}, chat_id, event) do
-    Phoenix.PubSub.broadcast(Hls.PubSub, chat_id, {:Chat, event, result})
+    Phoenix.PubSub.broadcast(Hls.PubSub, chat_id, {__MODULE__, event, result})
     {:ok, result}
   end
   defp notify_subs({:error, reason}, _event) do
@@ -133,13 +134,22 @@ defmodule Hls.Chat do
   #   Repo.all(Message)
   # end
 
-  # def get_messages(chat_id) do
-  #   from(c in Message, where: c.chat_id == ^chat_id, preload: [messages: :user])
-  #   |> Repo.all()
-  # end
-
-    def get_messages(chat_id) do
-    from(c in Message, where: c.chat_id == ^chat_id, preload: [:user])
+  def get_messages(chat_id) do
+    from(c in Message,
+      where: c.chat_id == ^chat_id,
+      order_by: [asc: c.inserted_at],
+      limit: 100,
+      preload: [:user]
+    )
     |> Repo.all()
   end
+
+  # def get_messages(chat_id) do
+  #   Repo.all(
+  #     from c in Ecto.assoc(User, :messages),
+  #       order_by: [asc: a.inserted_at],
+  #       limit: 100,
+  #       preload: [:user]
+  #   )
+  # end
 end
