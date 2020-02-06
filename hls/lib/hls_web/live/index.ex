@@ -4,22 +4,28 @@ defmodule HlsWeb.Live.Index do
   alias Hls.Chat
   alias Hls.Chat.Message
 
-  def mount(session, socket) do
-    if connected?(socket), do: Chat.subscribe(session.chat_id)
-    {:ok, fetch(socket, session)}
+  alias HlsWeb.Endpoint
+
+  def mount(
+    _params,
+    %{"chat_id" => chat_id, "current_user" => current_user} = _session,
+    socket
+  ) do
+    Chat.subscribe(chat_id)
+    {:ok,
+      assign(socket,
+        current_user: current_user,
+        chat_id: chat_id,
+        messages: Chat.get_messages(chat_id),
+        changeset: Chat.change_message(%Message{user_id: current_user.id, chat_id: chat_id})
+      )
+    }
   end
+
+  defp topic(chat_id), do: "room:#{chat_id}"
 
   def render(assigns) do
     HlsWeb.ChatView.render("index.html", assigns)
-  end
-
-  def fetch(socket, session \\ nil) do
-    assign(socket, %{
-      current_user: session.current_user.id,
-      chat_id: session.chat_id,
-      messages: Chat.get_messages(session.chat_id),
-      changeset: Chat.change_message(%Message{user_id: session.current_user.id, chat_id: session.chat_id})
-    })
   end
 
   def handle_event("validate", %{"message" => params}, socket) do
@@ -31,9 +37,18 @@ defmodule HlsWeb.Live.Index do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
-  def handle_event("send_message", %{"message" => params}, socket) do
-    case Chat.create_message(params) do
+  def handle_event(
+    "send_message",
+    %{"message" => message} = _payload,
+    %{assigns: %{chat_id: chat_id, current_user: current_user}} = socket
+    ) do
+    IO.inspect(chat_id)
+    IO.inspect(current_user.id)
+    case Chat.create_message(message, chat_id, current_user) do
       {:ok, message} ->
+        Endpoint.broadcast!(
+          topic(chat_id), "new_message", Chat.preload(message, :user)
+        )
         {:noreply, socket}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -43,7 +58,7 @@ defmodule HlsWeb.Live.Index do
   end
 
   def handle_info({Chat, [:message, _event_type], _message}, socket) do
-    {:noreply, fetch(socket)}
+    {:noreply, socket}
   end
 end
 
